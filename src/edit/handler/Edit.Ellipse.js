@@ -1,6 +1,11 @@
 L.Edit = L.Edit || {};
 
 L.Edit.Ellipse = L.Edit.SimpleShape.extend({
+
+	// since Leaflet 1.0, these constants are no longer defined in L.LatLng
+	DEG_TO_RAD: Math.PI / 180,
+	RAD_TO_DEG: 180 / Math.PI,
+
 	options: {
 		moveIcon: new L.DivIcon({
 			iconSize: new L.Point(8, 8),
@@ -63,7 +68,7 @@ L.Edit.Ellipse = L.Edit.SimpleShape.extend({
 	},
 
 	_getResizeMarkerPointX1: function (latlng) {
-		var tilt = this._shape._tiltDeg * L.LatLng.DEG_TO_RAD;
+		var tilt = this._shape._tiltDeg * this.DEG_TO_RAD;
 		var radius = this._shape._radiusX;
 		var xDelta = radius * Math.cos(tilt);
 		var yDelta = radius * Math.sin(tilt);
@@ -72,7 +77,7 @@ L.Edit.Ellipse = L.Edit.SimpleShape.extend({
 	},
 	
 	_getResizeMarkerPointX2: function (latlng) {
-		var tilt = this._shape._tiltDeg * L.LatLng.DEG_TO_RAD;
+		var tilt = this._shape._tiltDeg * this.DEG_TO_RAD;
 		var radius = this._shape._radiusX;
 		var xDelta = radius * Math.cos(tilt);
 		var yDelta = radius * Math.sin(tilt);
@@ -81,7 +86,7 @@ L.Edit.Ellipse = L.Edit.SimpleShape.extend({
 	},
 	
 	_getResizeMarkerPointY1: function (latlng) {
-		var tilt = this._shape._tiltDeg * L.LatLng.DEG_TO_RAD;
+		var tilt = this._shape._tiltDeg * this.DEG_TO_RAD;
 		var radius = this._shape._radiusY;
 		var xDelta = radius * Math.sin(tilt);
 		var yDelta = radius * Math.cos(tilt);
@@ -90,7 +95,7 @@ L.Edit.Ellipse = L.Edit.SimpleShape.extend({
 	},
 	
 	_getResizeMarkerPointY2: function (latlng) {
-		var tilt = this._shape._tiltDeg * L.LatLng.DEG_TO_RAD;
+		var tilt = this._shape._tiltDeg * this.DEG_TO_RAD;
 		var radius = this._shape._radiusY;
 		var xDelta = radius * Math.sin(tilt);
 		var yDelta = radius * Math.cos(tilt);
@@ -99,7 +104,7 @@ L.Edit.Ellipse = L.Edit.SimpleShape.extend({
 	},
 	
 	_getRotateMarkerPoint: function (latlng) {
-		var tilt = this._shape._tiltDeg * L.LatLng.DEG_TO_RAD;
+		var tilt = this._shape._tiltDeg * this.DEG_TO_RAD;
 		var radius = this._shape._radiusX + 20;
 		var xDelta = radius * Math.cos(tilt);
 		var yDelta = radius * Math.sin(tilt);
@@ -155,7 +160,7 @@ L.Edit.Ellipse = L.Edit.SimpleShape.extend({
 			// Rotate the ellipse
 			this._shape.setTilt(tilt);
 		} else if(xDelta < radius) {
-			var tilt = Math.acos(xDelta / radius) * L.LatLng.RAD_TO_DEG;
+			var tilt = Math.acos(xDelta / radius) * this.RAD_TO_DEG;
 			if(point.x > movePoint.x) {
 				tilt = 180 - tilt;
 			}
