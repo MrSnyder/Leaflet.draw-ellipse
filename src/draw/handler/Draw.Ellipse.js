@@ -30,11 +30,15 @@ L.Draw.Ellipse = L.Draw.SimpleShape.extend({
 	_drawShape: function (latlng) {
 		if (!this._shape) {
 			var radius = this._startLatLng.distanceTo(latlng);
-			this._shape = new L.Ellipse(this._startLatLng, [radius, radius], 0, this.options.shapeOptions);
+			var radiusX = L.latLng(this._startLatLng.lat, this._startLatLng.lng).distanceTo(L.latLng(this._startLatLng.lat, latlng.lng));
+			var radiusY = L.latLng(this._startLatLng.lat, this._startLatLng.lng).distanceTo(L.latLng(latlng.lat, this._startLatLng.lng));
+			this._shape = new L.Ellipse(this._startLatLng, [radiusX, radiusY], 0, this.options.shapeOptions);
 			this._map.addLayer(this._shape);
 		} else {
 			var radius = this._startLatLng.distanceTo(latlng);
-			this._shape.setRadius([radius, radius]);
+			var radiusX = L.latLng(this._startLatLng.lat, this._startLatLng.lng).distanceTo(L.latLng(this._startLatLng.lat, latlng.lng));
+			var radiusY = L.latLng(this._startLatLng.lat, this._startLatLng.lng).distanceTo(L.latLng(latlng.lat, this._startLatLng.lng));
+			this._shape.setRadius([radiusX, radiusY]);
 		}
 	},
 
@@ -47,18 +51,21 @@ L.Draw.Ellipse = L.Draw.SimpleShape.extend({
 		var latlng = e.latlng,
 			showRadius = this.options.showRadius,
 			useMetric = this.options.metric,
-			radius;
+			radiusX,
+			radiusY;
 
 		this._tooltip.updatePosition(latlng);
 		if (this._isDrawing) {
 			this._drawShape(latlng);
 
-			// Get the new radius (rounded to 1 dp)
-			radius = this._shape._mRadiusX.toFixed(1);
+			// get the new radii (rounded to 1 dp)
+			radiusX = this._shape._mRadiusX.toFixed(1);
+			radiusY = this._shape._mRadiusY.toFixed(1);
 
 			this._tooltip.updateContent({
 				text: this._endLabelText,
-				subtext: showRadius ? L.drawLocal.draw.handlers.ellipse.radius + ': ' + L.GeometryUtil.readableDistance(radius, useMetric) : ''
+				subtext: showRadius ? L.drawLocal.draw.handlers.ellipse.radius + ' 1: ' + L.GeometryUtil.readableDistance(radiusX, useMetric) + " , " +
+				L.drawLocal.draw.handlers.ellipse.radius + '2: ' + L.GeometryUtil.readableDistance(radiusY, useMetric): ''
 			});
 		}
 	}

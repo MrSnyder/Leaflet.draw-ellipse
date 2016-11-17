@@ -1,0 +1,11 @@
+{
+  "name": "leaflet-draw-ellipse",
+  "version": "0.0.2",
+  "description": "Ellipse plugin for Leaflet draw",
+  "main": "dist/leaflet.draw-ellipse.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MrSnyder/Leaflet.draw-ellipse.git"
+  },
+  "license": "MIT"
+}
