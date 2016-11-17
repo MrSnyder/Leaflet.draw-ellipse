@@ -1,6 +1,6 @@
 {
   "name": "leaflet-draw-ellipse",
-  "version": "0.0.2",
+  "version": "0.1.1",
   "description": "Ellipse plugin for Leaflet draw",
   "main": "dist/leaflet.draw-ellipse.js",
   "repository": {
